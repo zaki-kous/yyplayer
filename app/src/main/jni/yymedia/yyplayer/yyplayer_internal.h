@@ -13,6 +13,7 @@ struct YYPlayer {
     FFPlayer *ffPlayer;
     pthread_mutex_t mutex;
 
+    jclass weak_thiz;
     char *data_source;
 };
 

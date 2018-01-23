@@ -60,6 +60,11 @@ void     JB_DeleteLocalRef_P(JNIEnv *env, jobject *obj)
     *obj = NULL;
 }
 
+const char *JB_JString2UTFChars(JNIEnv *env, jstring str)
+{
+    return (*env)->GetStringUTFChars(env, str, NULL);
+}
+
 void    JB_ReleaseStringUTFChars(JNIEnv *env, jstring str, const char *c_str)
 {
     if (!str || !c_str)

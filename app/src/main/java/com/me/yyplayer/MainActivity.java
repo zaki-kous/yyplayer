@@ -1,8 +1,8 @@
 package com.me.yyplayer;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.me.yyplayer.media.YYPlayer;
@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.yyplayer_name_tv)).setText("yyplayer-zhuqian");
 
         yyPlayer = new YYPlayer();
-        Log.i(TAG, "yyPlayer :" + yyPlayer.getNativeYYPlayer());
+        yyPlayer.setDataSource(Uri.parse("file:///mnt/sdcard/yyplayer.mp4"));
+        yyPlayer.open();
     }
 }

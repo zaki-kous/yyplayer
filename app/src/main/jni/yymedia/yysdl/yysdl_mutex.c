@@ -4,9 +4,9 @@
 
 #include <assert.h>
 #include "yysdl_mutex.h"
-SDL_mutex *SDL_CreateMutex()
+SDL_Mutex *SDL_CreateMutex()
 {
-    SDL_mutex *mutex = mallocz(sizeof(SDL_mutex));
+    SDL_Mutex *mutex = mallocz(sizeof(SDL_Mutex));
     if (!mutex)
         return NULL;
     if (pthread_mutex_init(&mutex->mutex_id, NULL) != 0) {
@@ -16,7 +16,7 @@ SDL_mutex *SDL_CreateMutex()
     return mutex;
 }
 
-void SDL_DestroyMutex(SDL_mutex *mutex)
+void SDL_DestroyMutex(SDL_Mutex *mutex)
 {
     if (mutex) {
         pthread_mutex_destroy(&mutex->mutex_id);
@@ -24,7 +24,7 @@ void SDL_DestroyMutex(SDL_mutex *mutex)
     }
 }
 
-void SDL_DestroyMutexP(SDL_mutex **mutex)
+void SDL_DestroyMutexP(SDL_Mutex **mutex)
 {
     if (mutex) {
         SDL_DestroyMutex(*mutex);
@@ -32,7 +32,7 @@ void SDL_DestroyMutexP(SDL_mutex **mutex)
     }
 }
 
-int SDL_LockMutex(SDL_mutex *mutex)
+int SDL_LockMutex(SDL_Mutex *mutex)
 {
     assert(mutex);
     if (!mutex)
@@ -40,7 +40,7 @@ int SDL_LockMutex(SDL_mutex *mutex)
     return pthread_mutex_lock(&mutex->mutex_id);
 }
 
-int SDL_UnlockMutex(SDL_mutex *mutex)
+int SDL_UnlockMutex(SDL_Mutex *mutex)
 {
     assert(mutex);
     if (!mutex)
@@ -49,9 +49,9 @@ int SDL_UnlockMutex(SDL_mutex *mutex)
     return pthread_mutex_unlock(&mutex->mutex_id);
 }
 
-SDL_cond *SDL_CreateCond()
+SDL_Cond *SDL_CreateCond()
 {
-    SDL_cond *cond = mallocz(sizeof(SDL_cond));
+    SDL_Cond *cond = mallocz(sizeof(SDL_Cond));
     if (!cond)
         return NULL;
 
@@ -62,7 +62,7 @@ SDL_cond *SDL_CreateCond()
     return cond;
 }
 
-void  *SDL_DestroyCond(SDL_cond *cond)
+void  *SDL_DestroyCond(SDL_Cond *cond)
 {
     if (cond) {
         pthread_cond_destroy(&cond->cond_id);
@@ -70,7 +70,7 @@ void  *SDL_DestroyCond(SDL_cond *cond)
     }
 }
 
-void *SDL_DestroyCondP(SDL_cond **cond)
+void *SDL_DestroyCondP(SDL_Cond **cond)
 {
     if (cond) {
         SDL_DestroyCond(*cond);
@@ -78,7 +78,7 @@ void *SDL_DestroyCondP(SDL_cond **cond)
     }
 }
 
-int SDL_CondSignal(SDL_cond *cond)
+int SDL_CondSignal(SDL_Cond *cond)
 {
     assert(cond);
     if (!cond)
@@ -87,7 +87,7 @@ int SDL_CondSignal(SDL_cond *cond)
     return pthread_cond_signal(&cond->cond_id);
 }
 
-int SDL_CondWait(SDL_cond *cond, SDL_mutex *mutex)
+int SDL_CondWait(SDL_Cond *cond, SDL_Mutex *mutex)
 {
     assert(cond);
     assert(mutex);
@@ -97,7 +97,7 @@ int SDL_CondWait(SDL_cond *cond, SDL_mutex *mutex)
     return pthread_cond_wait(&cond->cond_id, &mutex->mutex_id);
 }
 
-int SDL_CondWaitTimeout(SDL_cond *cond, SDL_mutex *mutex, uint32_t ms)
+int SDL_CondWaitTimeout(SDL_Cond *cond, SDL_Mutex *mutex, uint32_t ms)
 {
     int retval;
     struct timeval datatime;

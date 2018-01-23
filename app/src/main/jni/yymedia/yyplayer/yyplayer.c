@@ -35,10 +35,40 @@ static int set_data_source_internal(YYPlayer *player, const char *url)
     return 0;
 }
 
-int yyp_set_data_source(YYPlayer *player, const char *url) {
+static int yyp_prepare_async_internal(YYPlayer *player)
+{
+    return ffp_prepare_async(player->ffPlayer, player->data_source);
+}
+
+int yyp_set_data_source(YYPlayer *player, const char *url)
+{
+    assert(player);
     PTHREAD_LOCK(&player->mutex);
     int ret = set_data_source_internal(player, url);
     PTHREAD_UNLOCK(&player->mutex);
-    LOGI("yyp_set_data_source ret :%d", ret);
     return ret;
+}
+
+int yyp_prepare_async(YYPlayer *player)
+{
+    assert(player);
+    PTHREAD_LOCK(&player->mutex);
+    int ret = yyp_prepare_async_internal(player);
+    PTHREAD_UNLOCK(&player->mutex);
+    LOGI("yyp_prepare_async ret :%d", ret);
+    return ret;
+}
+
+void *yyp_set_weak_ref(YYPlayer *player, void *weak_ref)
+{
+    assert(player);
+    void *pre_weak_ref = player->weak_thiz;
+    player->weak_thiz = weak_ref;
+    return pre_weak_ref;
+}
+
+void yyp_global_init()
+{
+    assert(player);
+    ffp_global_init();
 }

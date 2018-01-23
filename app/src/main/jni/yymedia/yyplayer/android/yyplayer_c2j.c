@@ -26,7 +26,13 @@ int JB_YYPlayer_Init(JNIEnv *env)
 
     return ret;
 }
-jlong    JB_GetNative_YYPlayer(JNIEnv *env, jobject thiz)
+
+jlong JB_GetNative_YYPlayer(JNIEnv *env, jobject thiz)
 {
     return (*env)->GetLongField(env, thiz, native_player.mNativePlayer);
+}
+
+void JB_SetNative_YYPlayer(JNIEnv *env, jobject thiz, jlong jvalue)
+{
+    (*env)->SetLongField(env, thiz, native_player.mNativePlayer, jvalue);
 }

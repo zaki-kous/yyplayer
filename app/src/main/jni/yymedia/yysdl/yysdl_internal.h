@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <memory.h>
+#include <jni.h>
 
 #ifndef ARRAY_SIZ_ELEN
 #define ARRAY_SIZ_ELEN(x) ((int) (sizeof(x) / sizeof(x[0])))

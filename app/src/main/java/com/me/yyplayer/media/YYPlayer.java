@@ -1,6 +1,7 @@
 package com.me.yyplayer.media;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -10,9 +11,9 @@ import java.lang.ref.WeakReference;
  * Created by zhuqian on 17/12/18.
  */
 public class YYPlayer {
-
+    private static final String TAG = "yyplyer";
     private long mNativeYYPlayer; //保存native层的YYPlayer
-    private native long _nativeSetup(Object yyPlayer); //创建播放器
+    private native void _nativeSetup(Object yyPlayer); //创建播放器
     private native void _setDataSource(String path); //设置数据源
     private native void _openAsync(); //打开视频
 
@@ -23,7 +24,7 @@ public class YYPlayer {
     }
 
     public YYPlayer() {
-        mNativeYYPlayer = _nativeSetup(new WeakReference<YYPlayer>(this));
+        _nativeSetup(new WeakReference<YYPlayer>(this));
     }
 
     public void setDataSource(Uri uri) {

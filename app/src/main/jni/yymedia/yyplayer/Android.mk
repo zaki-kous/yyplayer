@@ -12,7 +12,6 @@ LOCAL_SRC_FILES := ff_ffplay.c \
                    android/yyplayer_jni.c \
                    android/yyplayer_c2j.c \
                    android/yyplayer_android.c \
-                   android/jni/jni_base.c \
                    yyplayer.c \
 
 LOCAL_SHARED_LIBRARIES := yyffmpeg yysdl
